@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap");
 
+.container { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;}
+
 body {
   font-family: "JetBrains Mono", monospace;
 }
@@ -55,6 +57,21 @@ body {
   stroke-width: 2px;
 }
 
+.custom-node-header {
+  flex-grow: 1;
+  padding: 8px 24px;
+  margin-bottom: 8px;
+}
+.custom-node-subheader {
+  flex-grow: 1;
+  padding: 8px;
+  background: #eee;
+}
+.custom-node-content {
+  flex-grow: 1;
+  padding: 0 8px 8px 8px;
+}
+
 .react-flow__node {
   height: auto;
 }
@@ -65,7 +82,7 @@ body {
   border-radius: 3px;
   width: 150px;
   font-size: 12px;
-  color: #222;
+  color: 	black;
   text-align: center;
   border-width: 1px;
   border-style: solid;

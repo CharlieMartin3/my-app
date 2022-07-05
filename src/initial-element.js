@@ -4,34 +4,33 @@ import { MarkerType } from 'react-flow-renderer';
 export const nodes = [
     {
         id: "1",
-        style: {
-          background: "#454052",
-          width: 200,
-          color: "#fff",
-          fontSize: "20px",
-          fontFamily: "Helvetica",
+        type: "df4",
+        data: {
+          label: "DataFrame 1",
+          in0: "column1",
+          in1: "column2",
+          in2: "column3",
+          in3: "column4",
         },
-        type:"input",
-        data: {label:"DF 1"},
-        position: { x: 500, y: 250 }
+        position: { x: 600, y: 600 }
       },
       {
         id: "2",
-        style: {
-          background: "#454052",
-          width: 200,
-          color: "#fff",
-          fontSize: "25px",
-          fontFamily: "Helvetica",
+        type: "df4",
+        data: {
+          label: "DataFrame 2",
+          in0: "column1",
+          in1: "column2",
+          in2: "column3",
+          in3: "column4",
         },
-        data: { label: "DF 2" },
-        position: { x: 550, y: 300 }
+        position: { x: 50, y: 400 }
       },
       {
-        id: "plunger10",
-        type: "fun101",
+        id: "3",
+        type: "df8",
         data: {
-          label: "DataFrame 1",
+          label: "DataFrame 3",
           in0: "column1",
           in1: "column2",
           in2: "column3",
@@ -39,7 +38,7 @@ export const nodes = [
           in4: "column5",
           in5: "column6",
           in6: "column7",
-          in7: "column8"
+          in7: "column8",
         },
         position: { x: 300, y: 150 }
       }
