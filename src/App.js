@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactFlow, {
   addEdge,
   Controls,
@@ -87,15 +87,63 @@ const MouseFct = (data) =>{
 }
 
 const OverviewFlow = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [checkedState, setCheckedState] = useState(new Array(initialNodes.length).fill(false));
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const onConnect = (params) => setEdges((eds) => addEdge(params, eds));
 
   console.log(nodes);
 
+  const handleOnChange = (position) => {
+    console.log("pos = ",position);
+    const pos = parseInt(position)-1;
+    console.log("parseInt(pos) = ",parseInt(pos));
+    const updatedCheckedState = checkedState.map((item, index) =>
+    //console.log("item = ",!item)
+    index === position ? !item:item
+    //index === parseInt(pos) ? !item:item
+    );
+    //console.log("update = ",updatedCheckedState)
+    setCheckedState(updatedCheckedState);
+
+    const new_nodes_array = [];
+    updatedCheckedState.map((item, index) =>
+    item === true ? new_nodes_array.push(initialNodes[index]):console.log("pass")
+    );
+
+    console.log(new_nodes_array)
+    
+
+    onNodesChange(new_nodes_array)
+  };
+
+  console.log("nodes after update = ",nodes)
+
   return (  
     <div>
-      <div class="container" >
+      <div className="container">
+          {initialNodes.map(({ data, id }) => {
+          console.log("ch.id = ",checkedState[id])
+          return (
+            <li key={id}>
+              <div>
+                <div>
+                  <input
+                    type="checkbox"
+                    id={id}
+                    name={data.label}
+                    value={checkedState[id]}
+                    checked={checkedState[id]}
+                    onChange={() => handleOnChange(id)}
+                  />{data.label}
+                </div>
+                
+                </div>
+            </li>
+          );
+        })}
+      </div>
+      {/* <div class="container" >
         <legend>Veuillez sélectionner les dataframes :</legend>
         {[...Array(nodes)][0].map((i) => {
         //console.log("hehehe");
@@ -103,12 +151,13 @@ const OverviewFlow = () => {
         //console.log(position)
         //console.log(nodes[position-1])
         return (
-          <tr key={position} value={nodes[position-1].data.label}>
-            <div><input id={position-1} type={'checkbox'} onClick={MouseFct}/>{nodes[position-1].data.label}</div>
-          </tr>
+          <Checkbox label="Value 1" value={checkedOne} onChange={handleChangeOne}/>
+          // <tr key={position} value={nodes[position-1].data.label}>
+          //   <div><input id={position-1} type={'checkbox'} onClick={setNodes()}/>{nodes[position-1].data.label}</div>
+          // </tr>
         )
         })} 
-      </div>
+      </div> */}
       <ReactFlow
       nodes={nodes}
       edges={edges}
@@ -120,18 +169,6 @@ const OverviewFlow = () => {
       onInit={onInit}
       style={graphStyles}
     >
-      {/* <fieldset>
-        <legend>Choose the Dataframes:</legend>
-        <div>
-          <input type="checkbox" id="scales" name="scales"
-             checked/>
-          <label for="scales">Scales</label>
-        </div>
-        <div>
-          <input type="checkbox" id="horns" name="horns"/>
-          <label for="horns">Horns</label>
-        </div>
-      </fieldset> */}
       <Controls />
       <Background/>
     </ReactFlow>

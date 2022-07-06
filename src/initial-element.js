@@ -3,7 +3,7 @@ import { MarkerType } from 'react-flow-renderer';
 
 export const nodes = [
     {
-        id: "1",
+        id: 0,
         type: "df4",
         data: {
           label: "DataFrame 1",
@@ -15,7 +15,7 @@ export const nodes = [
         position: { x: 600, y: 600 }
       },
       {
-        id: "2",
+        id: 1,
         type: "df4",
         data: {
           label: "DataFrame 2",
@@ -27,7 +27,7 @@ export const nodes = [
         position: { x: 50, y: 400 }
       },
       {
-        id: "3",
+        id: 2,
         type: "df8",
         data: {
           label: "DataFrame 3",
