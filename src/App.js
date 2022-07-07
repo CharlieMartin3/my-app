@@ -22,17 +22,19 @@ const mkFunGeneral = (n) => (
   isConnectable,
   targetPosition = Position.Top,
   sourcePosition = Position.Left
-}: NodeProps) => (
-  
-  //<div style={{ height: `${(n - 1) * 18 + 44}px`,display: `table` }}>
+}: NodeProps) => {
+  //console.log("data = ",data);
+  //console.log("data[`in0`].label = ",data[`in0`].label)
+  return(
+    //<div style={{ height: `${(n - 1) * 18 + 44}px`,display: `table` }}>
     <table border={'1px solid black'} >
       <tbody>
       <tr>
         <th>{data.label}</th>
       </tr>
       {[...Array(n).keys()].map((i) => {
-        return <tr key={i} value={data[`in${i}`]}>
-          <td>{data[`in${i}`]}</td>
+        return <tr key={i} value={data[`in${i}`].label}>
+          <td>{data[`in${i}`].label}</td>
           <td><Handle
           type="input"
           position={Position.Left}
@@ -46,7 +48,11 @@ const mkFunGeneral = (n) => (
 
       </tbody>
       
-    </table>);
+    </table>
+  );
+}
+  
+  
 
 const nodeTypes = {
   df8: mkFunGeneral(8),
@@ -60,12 +66,19 @@ const OverviewFlow = () => {
   const onConnect = (params) =>{
     //ici on doit effectuer la verification => condition if classique : 
     // if condition verifier on set le noeud sinon on le set pas et on affiche un message d'erreur
-    console.log("params = ",params.source)
-    console.log("noeuds source = ",initialNodes[params.source])
-    setEdges((eds) => addEdge(params, eds));
-  } 
-
-  //console.log("nodes = ",initialNodes);
+    console.log("params = ",params);
+    console.log("params.source = ",params.source);
+    console.log("noeuds source = ",initialNodes[params.source].data[params.sourceHandle].type);//.data[`in${}`]]);
+    const type_node_source = initialNodes[params.source].data[params.sourceHandle].type;
+    const type_node_target = initialNodes[params.target].data[params.sourceHandle].type;
+    if (type_node_source === type_node_target) {
+      console.log("EGALITE")
+      setEdges((eds) => addEdge(params, eds));
+      }
+   else {
+      console.log("pass");
+    }
+  }
 
   const handleOnChange = (position) => {
     //console.log("pos = ",position);
