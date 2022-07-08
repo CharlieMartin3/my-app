@@ -27,21 +27,20 @@ const mkFunGeneral = (n) => (
   //console.log("data[`in0`].label = ",data[`in0`].label)
   return(
     //<div style={{ height: `${(n - 1) * 18 + 44}px`,display: `table` }}>
-    <table border={'1px solid black'} >
+    <table >
       <tbody>
       <tr>
         <th>{data.label}</th>
       </tr>
       {[...Array(n).keys()].map((i) => {
         return <tr key={i} value={data[`in${i}`].label}>
-          <td>{data[`in${i}`].label}</td>
           <td><Handle
           type="input"
           position={Position.Left}
           isConnectable={isConnectable}
           id={`in${i}`}
-          style={{ top: 48 + 22 * i}}
-        /></td>
+           />
+          {data[`in${i}`].label}</td>          
         </tr>
         })
       }
@@ -63,21 +62,25 @@ const OverviewFlow = () => {
   const [checkedState, setCheckedState] = useState(new Array(initialNodes.length).fill(false));
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [ isAlertVisible, setIsAlertVisible ] = React.useState(false);
+
+  const handleButtonClick = () => {
+    setIsAlertVisible(true); 
+    setTimeout(() => {setIsAlertVisible(false);}, 3000);  
+  }
   const onConnect = (params) =>{
     //ici on doit effectuer la verification => condition if classique : 
     // if condition verifier on set le noeud sinon on le set pas et on affiche un message d'erreur
     console.log("params = ",params);
     console.log("params.source = ",params.source);
-    console.log("noeuds source = ",initialNodes[params.source].data[params.sourceHandle].type);//.data[`in${}`]]);
+    console.log("noeuds source = ",initialNodes[params.source].data[params.sourceHandle].type);
     const type_node_source = initialNodes[params.source].data[params.sourceHandle].type;
     const type_node_target = initialNodes[params.target].data[params.sourceHandle].type;
     if (type_node_source === type_node_target) {
       console.log("EGALITE")
       setEdges((eds) => addEdge(params, eds));
       }
-   else {
-      console.log("pass");
-    }
+   else {handleButtonClick(); }
   }
 
   const handleOnChange = (position) => {
@@ -103,6 +106,7 @@ const OverviewFlow = () => {
     setNodes(new_nodes_array)
   };
 
+  const onClickValidate = ()=>{}
   //console.log("nodes after update = ",nodes)
 
   return (  
@@ -129,6 +133,11 @@ const OverviewFlow = () => {
           );
         })}
       </div>
+      {isAlertVisible && <div className='alert-container'>
+        <div className='alert-inner'>
+          Pas le même type !
+        </div>
+      </div>}
       <ReactFlow
       nodes={nodes}
       edges={edges}
@@ -143,6 +152,10 @@ const OverviewFlow = () => {
       <Controls />
       <Background/>
     </ReactFlow>
+      <button onClick={onClickValidate} className="button-validate">
+      VALIDER
+    </button>
+    
     </div>
     
   );
