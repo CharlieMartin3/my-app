@@ -21,6 +21,10 @@ export default function CustomEdge({
   data,
 }) {
 
+    const removeEdge = (edgeID) => {
+      data.setEdges(previousEdge => previousEdge.filter(edge =>edge.id !== edgeID)) 
+    }
+
     const idSplit = id.match("reactflow__edge-([0-9])(.+)-([0-9])(.+)");
     const keyDict = {};
     keyDict[idSplit[1]] = idSplit[2]
@@ -71,7 +75,7 @@ export default function CustomEdge({
         requiredExtensions="http://www.w3.org/1999/xhtml"
       >
         <div>
-          <button className="edgebutton" onClick={() => data?.onClickBtnToRemove(id)}>
+          <button className="edgebutton" onClick={() => removeEdge(id)}>
             ×
           </button>
         </div>

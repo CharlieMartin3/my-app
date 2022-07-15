@@ -78,14 +78,6 @@ const OverviewFlow = () => {
 
   console.log("edges = ",edges)
 
-  const removeEdge = edgeId => {
-    const newListEdges = [...edges]
-    //console.log("newListEdges = ",newListEdges)
-    newListEdges.filter(edge => edge.id !== edgeId)
-    //console.log("newListEdges after filter = ",newListEdges)
-    setEdges(newListEdges)
-  }
-
 
   const onConnect = (params) =>{
     //ici on doit effectuer la verification => condition if classique : 
@@ -101,9 +93,7 @@ const OverviewFlow = () => {
       setEdges((eds) => addEdge({
          ...params, 
          type: 'buttonedge', 
-         data: {
-          onClickBtnToRemove: (id) => removeEdge(id),
-         }
+         data: {setEdges}
       },eds));
     }
    else {handleButtonClick(); }
