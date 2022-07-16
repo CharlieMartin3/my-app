@@ -93,6 +93,13 @@ body {
   outline-offset: -2px;
 }
 
+.flexbox-container {
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  width: auto;
+}
+
 
 .ports {
   padding: 0px;

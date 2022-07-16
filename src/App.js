@@ -93,7 +93,7 @@ const OverviewFlow = () => {
       setEdges((eds) => addEdge({
          ...params, 
          type: 'buttonedge', 
-         data: {setEdges}
+         data: {"setEdges":setEdges, "jointure":"inner"},
       },eds));
     }
    else {handleButtonClick(); }

@@ -1,9 +1,10 @@
 import React from 'react';
-import { getBezierPath, getEdgeCenter, getMarkerEnd, StraightEdge } from 'react-flow-renderer';
+import { getBezierPath,getSmoothStepPath, getEdgeCenter, getMarkerEnd, StraightEdge } from 'react-flow-renderer';
 import { nodes } from './initial-element';
 import './index.css';
 
-const foreignObjectSize = 40;
+const foreignObjectWidth = 120;
+const foreignObjectHeigth = 40;
 
 
 export default function CustomEdge({
@@ -16,13 +17,24 @@ export default function CustomEdge({
   targetY,
   sourcePosition,
   targetPosition,
-  style = { stroke: 'red'},
+  style = { stroke: 'red',},
   markerEnd,
   data,
 }) {
 
+  //data
+  console.log("data = ",data)
+
     const removeEdge = (edgeID) => {
       data.setEdges(previousEdge => previousEdge.filter(edge =>edge.id !== edgeID)) 
+    }
+
+    const changeLeftJointure = (edgeID) => {
+      data.jointure = "left"
+    }
+
+    const changeRightJointure = (edgeID) => {
+      data.jointure = "right"
     }
 
     const idSplit = id.match("reactflow__edge-([0-9])(.+)-([0-9])(.+)");
@@ -32,7 +44,7 @@ export default function CustomEdge({
     //console.log("keyDict = ",keyDict);
     const source_name = nodes[source].data[keyDict[source]].label;
     const target_name = nodes[target].data[keyDict[target]].label;
-    const edgePath = getBezierPath({
+    const edgePath = getSmoothStepPath({
         sourceX,
         sourceY,
         sourcePosition,
@@ -46,6 +58,8 @@ export default function CustomEdge({
     targetX,
     targetY,
   });
+
+  console.log("jointure = ",data.jointure)
 
   return (
     <>
@@ -67,17 +81,24 @@ export default function CustomEdge({
         </textPath>
       </text>
       <foreignObject
-        width={foreignObjectSize}
-        height={foreignObjectSize}
-        x={edgeCenterX - foreignObjectSize / 2}
-        y={edgeCenterY - foreignObjectSize / 2}
+        width={foreignObjectWidth}
+        height={foreignObjectHeigth}
+        x={edgeCenterX - foreignObjectWidth / 2} 
+        y={edgeCenterY - (foreignObjectHeigth / 2)+30} // Math.abs(sourceY-targetY) + 20 
         className="edgebutton-foreignobject"
         requiredExtensions="http://www.w3.org/1999/xhtml"
       >
-        <div>
+        <div class="flexbox-container">
+        <button className="edgebutton" onClick={() =>changeLeftJointure(id)}>
+          &lt;
+          </button>
           <button className="edgebutton" onClick={() => removeEdge(id)}>
             ×
           </button>
+          <button className="edgebutton" onClick={() => changeRightJointure(id)}>
+          &gt;
+          </button>
+          <text name="jointure"/>
         </div>
       </foreignObject>
     </>
