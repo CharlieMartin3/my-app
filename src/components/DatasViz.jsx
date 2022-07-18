@@ -4,8 +4,20 @@ import ReactFlow, {
   Background,
 } from 'react-flow-renderer';
 
+/* 
+  DatasViz = Reactflow => espace de visualisation des relations. C'est ici que l'utilisateur va observer et créer ses relations.
+*/
+
+//style
 const graphStyles = { width: "100%", height: "800px"};
 const onInit = (reactFlowInstance) => console.log('flow loaded:', reactFlowInstance);
+
+/* 
+  nodes = datasSets
+  edges = relations
+  nodeTypes = b
+
+*/
 
 const DatasViz = ({
     nodes,

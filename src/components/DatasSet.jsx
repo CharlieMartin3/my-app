@@ -1,6 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types"
 
+/*
+  DatasSet : jeux de données : La représentation des données ici dans la forme d'une colonne avec en titre le nom du jeu de données
+  et chaque ligne le nom d'une colonne. Chaque colonne est associé à un point qui va pouvoir permettre à l'utilsateur d'effectuer les relations.
+ */
+
+
+/* 
+  style des lignes (colonne du df)
+ */ 
 export const contentStyle = {
     contentHeader: {
       padding: "8px 0px",
@@ -27,7 +36,10 @@ export const contentStyle = {
         "rgba(0, 0, 0, 0.2) 0px 1px 3px 0px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 2px 1px -1px"
     }
   };
-  
+
+  /*
+  style du DatasSet
+   */
   const style = {
     body: {
       display: "flex",
@@ -49,13 +61,14 @@ export const contentStyle = {
     },
     contentWrapper: {
       padding: "8px 0px",
-      height: "auto"
+      height: "auto" // ICI la taille va poser problème pour les jeux de données avec enormement de colonne
     }
   };
 
-//overflow:"auto",
-
-
+/*
+  label = titre du dataset
+  content = colonnes du dataset avec leur point associé (reat-flow) cf app.js pour la création du content
+ */
 function DatasSet({ 
 label, 
 selected,
@@ -65,11 +78,8 @@ content,
  
     let customTitle = { ...style.title };
     if (color) customTitle.backgroundColor = color;
-  
-    // Collapse contentWrapper on icon click
     return (
-      <div //style={{ ...style.body, ...(selected ? style.selected : []) }}>
-      >
+      <div>
         <div style={customTitle}>{label}</div>
         <div style={style.contentWrapper}>{content}</div>
       </div>

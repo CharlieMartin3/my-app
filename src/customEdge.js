@@ -3,10 +3,19 @@ import { getBezierPath,getSmoothStepPath, getEdgeCenter, getMarkerEnd, StraightE
 import { nodes } from './initial-element';
 import './index.css';
 
+
 const foreignObjectWidth = 120;
 const foreignObjectHeigth = 40;
 
+/*
+  customEdge = relation entre 2 dataset
+  id = id de la relation
+  source, target =  point de départ et point d'arriver de la relation
+  sourceX, sourceY, targetX, targetY = coordonnées des points
+  style = couleur de la relation (à modifier en fonction de inner,left,right pour apporter plus de clarté)
+  data = custom et jointure (cf App.js)
 
+*/
 export default function CustomEdge({
   id,
   source,
@@ -21,10 +30,6 @@ export default function CustomEdge({
   markerEnd,
   data,
 }) {
-
-  //data
-  console.log("data = ",data)
-
     const removeEdge = (edgeID) => {
       data.setEdges(previousEdge => previousEdge.filter(edge =>edge.id !== edgeID)) 
     }
@@ -37,11 +42,11 @@ export default function CustomEdge({
       data.jointure = "right"
     }
 
+    //regex pour obtenir le nom des colonnes
     const idSplit = id.match("reactflow__edge-([0-9])(.+)-([0-9])(.+)");
     const keyDict = {};
     keyDict[idSplit[1]] = idSplit[2]
     keyDict[idSplit[3]] = idSplit[4]
-    //console.log("keyDict = ",keyDict);
     const source_name = nodes[source].data[keyDict[source]].label;
     const target_name = nodes[target].data[keyDict[target]].label;
     const edgePath = getSmoothStepPath({
@@ -58,8 +63,6 @@ export default function CustomEdge({
     targetX,
     targetY,
   });
-
-  console.log("jointure = ",data.jointure)
 
   return (
     <>
